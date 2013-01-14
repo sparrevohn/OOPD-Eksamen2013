@@ -97,7 +97,18 @@ public final class ExpressionInterpreter {
     	return new Eq(
     	  interpret(scanner),
     	  interpret(scanner));
-      case "If": return new Text("");
+      case "If":
+    	  String ifTE = scanner.nextLine();
+    	  int indexThen = ifTE.indexOf("Then");
+    	  int indexElse = ifTE.indexOf("Else");
+    	  String thenExp = ifTE.substring(indexThen+5, indexElse);
+    	  String elseExp = ifTE.substring(indexElse+5);
+    	return new IfThenElse(
+    	  interpret(ifTE),
+    	  interpret(thenExp),
+    	  interpret(elseExp));
+    	
+    	
       case "Text":
         return new Text(scanner.next());
       case "Concat":
