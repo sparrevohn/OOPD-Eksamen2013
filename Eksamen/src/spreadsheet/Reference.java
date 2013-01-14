@@ -17,21 +17,21 @@ public final class Reference
     super(GenericType.instance);
     this.spreadsheet = spreadsheet;
     this.range = range;
-    range.makeArray();
+
+    expressions = new ArrayList<Expression>();
   }
 
-  private Expression getExpression() {
+  private ArrayList<Expression> getExpression() {
 	  int i = 0;
-	  expressions = new ArrayList<Expression>();
-	  while (i <= range.posArray.size()-1) {
-	    Expression expression = this.spreadsheet.get(this.range.posArray.get(i));
+	  while (i <= Range.posArray.size()-1) {
+	    Expression expression = this.spreadsheet.get(Range.posArray.get(i));
 	    if (expression == null) {
 	      expression = new Text("");
 	    }
 	    expressions.add(expression);
 	    i++;
 	  }
-	return null;
+	  return expressions;
   }
 
   public boolean toBoolean() {
@@ -45,7 +45,7 @@ public final class Reference
   public String toString() {
 	  if (this.getExpression() != null)
     return this.getExpression().toString();
-	  else return "";
+	  else return "NullPointer";
   }
 
   public void checkAcyclic(final Path path)

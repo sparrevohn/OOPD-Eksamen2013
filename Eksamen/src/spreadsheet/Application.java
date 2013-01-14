@@ -168,7 +168,7 @@ public final class Application {
    */
   public void set(final Position position, final Expression expression) {
     try {
-      expression.checkAcyclic(new Path(new Reference(this.worksheet, new Range(position, position)), null));
+      expression.checkAcyclic(new Path(new Reference(this.worksheet, position), null));
     } catch (CycleException e) {
       this.errorEvent.notifyObservers(e);
       return;

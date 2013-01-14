@@ -8,17 +8,18 @@ public final class Range {
 		private int maxColumn;
 		private int minRow;
 		private int maxRow;
-		public ArrayList<Position> posArray; 
+		public static ArrayList<Position> posArray; 
 	
 	public Range(final Position a, final Position b) {
 		minColumn = Math.min(a.getColumn(),b.getColumn());
 		maxColumn = Math.max(a.getColumn(), b.getColumn());
 		minRow = Math.min(a.getRow(), b.getRow());
 		maxRow = Math.max(a.getRow(), b.getRow());
+		posArray = new ArrayList<Position>();
+		makeArray();
 	}
 	
-	public void makeArray() {
-		posArray = new ArrayList<Position>();
+	private void makeArray() {
 		int startRow = minRow;
 		while (minColumn <= maxColumn) {
 			while (minRow <= maxRow) {
@@ -29,5 +30,17 @@ public final class Range {
 			minColumn++;
 		}
 	  }	
+	
+	public int containedIndex(Position pos) {
+		int i = 0;
+		while (i < Range.posArray.size()-1) {
+			if (pos.getColumn() == Range.posArray.get(i).getColumn()
+				&& pos.getRow() == Range.posArray.get(i).getRow()) {
+				return i;
+			}
+			else i++;
+		}
+		return -1;
+	}
 }
 
