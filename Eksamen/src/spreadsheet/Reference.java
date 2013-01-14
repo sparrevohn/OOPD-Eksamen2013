@@ -1,26 +1,37 @@
 package spreadsheet;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import spreadsheet.exception.CycleException;
 import spreadsheet.textual.Text;
 
 public final class Reference
-    extends Expression {
+    extends Expression implements Iterable<Expression> {
 
   private final Spreadsheet spreadsheet;
-  private final Position position;
+  public final Range range;
+  private ArrayList<Expression> expressions;
 
-  public Reference(final Spreadsheet spreadsheet, final Position position) {
+  public Reference(final Spreadsheet spreadsheet, final Range range) {
     super(GenericType.instance);
     this.spreadsheet = spreadsheet;
-    this.position = position;
+    this.range = range;
+    range.makeArray();
   }
 
   private Expression getExpression() {
-    final Expression expression = this.spreadsheet.get(this.position);
-    if (expression == null) {
-      return new Text("");
-    }
-    return expression;
+	  int i = 0;
+	  expressions = new ArrayList<Expression>();
+	  while (i <= range.posArray.size()-1) {
+	    Expression expression = this.spreadsheet.get(this.range.posArray.get(i));
+	    if (expression == null) {
+	      expression = new Text("");
+	    }
+	    expressions.add(expression);
+	    i++;
+	  }
+	return null;
   }
 
   public boolean toBoolean() {
@@ -32,7 +43,9 @@ public final class Reference
   }
 
   public String toString() {
+	  if (this.getExpression() != null)
     return this.getExpression().toString();
+	  else return "";
   }
 
   public void checkAcyclic(final Path path)
@@ -44,7 +57,9 @@ public final class Reference
   }
 
   public String getDescription() {
-    final String positionDescription = this.position.getDescription();
+	int lastIndex = range.posArray.size()-1;
+    final String positionDescription = range.posArray.get(0).getDescription() + "-"
+    								  + range.posArray.get(lastIndex).getDescription();
     if (Application.instance.getWorksheet().equals(this.spreadsheet)) {
       return positionDescription;
     } else {
@@ -62,12 +77,19 @@ public final class Reference
     final Reference otherReference = (Reference)other;
     return
         otherReference.spreadsheet.equals(this.spreadsheet) &&
-        otherReference.position.equals(this.position);
+        otherReference.range.posArray.equals(this.range.posArray);
   }
   
   @Override
   public boolean refersTo(final Spreadsheet spreadsheet) {
     return this.spreadsheet.equals(spreadsheet);
   }
+
+@Override
+public Iterator<Expression> iterator() {
+	return expressions.iterator();
+}
+
+
 
 }

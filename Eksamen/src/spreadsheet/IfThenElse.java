@@ -4,7 +4,7 @@ import spreadsheet.expression.NullaryExpression;
 
 public final class IfThenElse extends NullaryExpression {
 
-	private static final Type type = null;
+	private static final Type type = GenericType.instance;
 	private Expression condition;
 	private Expression ifTrue;
 	private Expression ifFalse;
