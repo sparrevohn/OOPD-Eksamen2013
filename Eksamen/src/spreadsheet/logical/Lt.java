@@ -5,7 +5,7 @@ import spreadsheet.expression.BinaryExpression;
 
 public final class Lt extends BinaryExpression {
 
-	protected Lt(final Expression alpha, final Expression beta) {
+	public Lt(final Expression alpha, final Expression beta) {
 	    super(LogicalType.instance, alpha, beta);		
 	}
 	

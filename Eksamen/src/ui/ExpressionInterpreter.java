@@ -12,7 +12,10 @@ import spreadsheet.arithmetic.Int;
 import spreadsheet.arithmetic.Neg;
 import spreadsheet.exception.NoSuchSpreadsheet;
 import spreadsheet.logical.And;
+import spreadsheet.logical.Eq;
 import spreadsheet.logical.False;
+import spreadsheet.logical.IfThenElse;
+import spreadsheet.logical.Lt;
 import spreadsheet.logical.Not;
 import spreadsheet.logical.Or;
 import spreadsheet.logical.True;
@@ -86,6 +89,19 @@ public final class ExpressionInterpreter {
         return new Or(
           interpret(scanner),
           interpret(scanner));
+      case "Lt": 
+    	return new Lt(
+    	  interpret(scanner), 
+    	  interpret(scanner));
+      case "Eq": 
+    	return new Eq(
+    	  interpret(scanner),
+    	  interpret(scanner));
+      case "If":
+    	return new IfThenElse(
+    			interpret(scanner),
+    			interpret(scanner),
+    			interpret(scanner));
       case "Text":
         return new Text(scanner.next());
       case "Concat":

@@ -22,5 +22,6 @@ public final class Not
       "Not %s",
       this.alpha.getDescription());
   }
-
+  
+  
 }
