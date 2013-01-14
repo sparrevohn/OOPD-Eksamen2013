@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import spreadsheet.Application;
 import spreadsheet.Expression;
+import spreadsheet.IfThenElse;
 import spreadsheet.Reference;
 import spreadsheet.Spreadsheet;
 import spreadsheet.arithmetic.Add;
@@ -14,7 +15,6 @@ import spreadsheet.exception.NoSuchSpreadsheet;
 import spreadsheet.logical.And;
 import spreadsheet.logical.Eq;
 import spreadsheet.logical.False;
-import spreadsheet.logical.IfThenElse;
 import spreadsheet.logical.Lt;
 import spreadsheet.logical.Not;
 import spreadsheet.logical.Or;
@@ -97,11 +97,7 @@ public final class ExpressionInterpreter {
     	return new Eq(
     	  interpret(scanner),
     	  interpret(scanner));
-      case "If":
-    	return new IfThenElse(
-    			interpret(scanner),
-    			interpret(scanner),
-    			interpret(scanner));
+      case "If": return new Text("");
       case "Text":
         return new Text(scanner.next());
       case "Concat":
