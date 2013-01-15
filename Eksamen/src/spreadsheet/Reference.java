@@ -10,28 +10,32 @@ public final class Reference
     extends Expression implements Iterable<Expression> {
 
   private final Spreadsheet spreadsheet;
-  public final Range range;
+  private Position position;
+  private Range range;
   private ArrayList<Expression> expressions;
 
+  public Reference(final Spreadsheet spreadsheet, final Position position) {
+	  super(GenericType.instance);
+	  this.spreadsheet = spreadsheet;
+	  this.position = position;
+	  this.range = new Range(position, position);
+	  expressions = new ArrayList<Expression>();
+  }
+  
   public Reference(final Spreadsheet spreadsheet, final Range range) {
     super(GenericType.instance);
     this.spreadsheet = spreadsheet;
+    this.position = Range.posArray.get(0);
     this.range = range;
-
-    expressions = new ArrayList<Expression>();
+	expressions = new ArrayList<Expression>();
   }
 
-  private ArrayList<Expression> getExpression() {
-	  int i = 0;
-	  while (i <= Range.posArray.size()-1) {
-	    Expression expression = this.spreadsheet.get(Range.posArray.get(i));
+  private Expression getExpression() {
+	    Expression expression = this.spreadsheet.get(this.position);
 	    if (expression == null) {
 	      expression = new Text("");
 	    }
-	    expressions.add(expression);
-	    i++;
-	  }
-	  return expressions;
+	    return expression;
   }
 
   public boolean toBoolean() {
@@ -43,9 +47,7 @@ public final class Reference
   }
 
   public String toString() {
-	  if (this.getExpression() != null)
     return this.getExpression().toString();
-	  else return "NullPointer";
   }
 
   public void checkAcyclic(final Path path)
@@ -57,9 +59,13 @@ public final class Reference
   }
 
   public String getDescription() {
-	int lastIndex = range.posArray.size()-1;
-    final String positionDescription = range.posArray.get(0).getDescription() + "-"
-    								  + range.posArray.get(lastIndex).getDescription();
+	  int size = range.getArray().size();
+	  final String positionDescription;
+	  if (size > 1) {
+		  positionDescription = this.position.getDescription() + ":"
+				  				+ range.getArray().get(size-1).getDescription();
+	  }
+	  else positionDescription = this.position.getDescription();
     if (Application.instance.getWorksheet().equals(this.spreadsheet)) {
       return positionDescription;
     } else {
@@ -77,7 +83,7 @@ public final class Reference
     final Reference otherReference = (Reference)other;
     return
         otherReference.spreadsheet.equals(this.spreadsheet) &&
-        otherReference.range.posArray.equals(this.range.posArray);
+        otherReference.range.getArray().equals(this.range.getArray());
   }
   
   @Override
@@ -87,6 +93,13 @@ public final class Reference
 
 @Override
 public Iterator<Expression> iterator() {
+	int i = 0;
+	while (i < range.getArray().size()-1) {
+		this.position = range.getArray().get(i);
+		Expression expression = getExpression();
+		expressions.add(expression);
+		i++;
+	}
 	return expressions.iterator();
 }
 

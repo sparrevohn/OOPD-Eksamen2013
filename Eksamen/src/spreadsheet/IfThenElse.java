@@ -4,14 +4,13 @@ import spreadsheet.expression.NullaryExpression;
 
 public final class IfThenElse extends NullaryExpression {
 
-	private static final Type type = GenericType.instance;
 	private Expression condition;
 	private Expression ifTrue;
 	private Expression ifFalse;
 	
 	public IfThenElse(final Expression condition, final Expression ifTrue,
 			final Expression ifFalse) {
-		super(type);
+		super(GenericType.instance);
 		this.condition = condition;
 		this.ifTrue = ifTrue;
 		this.ifFalse = ifFalse;
