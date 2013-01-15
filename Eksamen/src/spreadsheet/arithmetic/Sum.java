@@ -7,10 +7,12 @@ import spreadsheet.expression.NullaryExpression;
 public final class Sum extends NullaryExpression {
 	
 	private final Reference reference; 
+	private String description;
 	
 	public Sum(final Reference reference) {
 		super(ArithmeticType.instance);
 		this.reference = reference;
+		description = reference.getDescription();
 	}
 
 	@Override
@@ -24,8 +26,7 @@ public final class Sum extends NullaryExpression {
 	
 	@Override
 	public String getDescription() {
-		String ref = reference.getDescription();
 		return this.getClass().getSimpleName() + " " 
-			   + ref.substring(ref.indexOf('!')+1);
+			   + description.substring(description.indexOf('!')+1);
 	}
 }

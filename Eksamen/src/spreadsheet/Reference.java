@@ -42,10 +42,10 @@ public final class Reference
 
   private void makeArray() {
 	  int i = 0;
-	  while (i < range.getArray().size()-1) {
-		  
-	  }
-		  
+	  while (i < range.getArray().size()) {
+		  expressions.add(Application.instance.get(range.getArray().get(i)));
+		  i++;
+	  }  
   }
   
   public boolean toBoolean() {
@@ -71,11 +71,8 @@ public final class Reference
   public String getDescription() {
 	  int size = range.getArray().size();
 	  final String positionDescription;
-	  if (size > 1) {
 		  positionDescription = this.position.getDescription() + ":"
 				  				+ range.getArray().get(size-1).getDescription();
-	  }
-	  else positionDescription = this.position.getDescription();
     if (Application.instance.getWorksheet().equals(this.spreadsheet)) {
       return positionDescription;
     } else {
@@ -103,7 +100,7 @@ public final class Reference
 
 @Override
 public Iterator<Expression> iterator() {
-	return null;
+	return expressions.iterator();
 }
 
 
