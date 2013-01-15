@@ -6,11 +6,14 @@ import java.util.Scanner;
 import spreadsheet.Application;
 import spreadsheet.Expression;
 import spreadsheet.IfThenElse;
+import spreadsheet.Position;
+import spreadsheet.Range;
 import spreadsheet.Reference;
 import spreadsheet.Spreadsheet;
 import spreadsheet.arithmetic.Add;
 import spreadsheet.arithmetic.Int;
 import spreadsheet.arithmetic.Neg;
+import spreadsheet.arithmetic.Sum;
 import spreadsheet.exception.NoSuchSpreadsheet;
 import spreadsheet.logical.And;
 import spreadsheet.logical.Eq;
@@ -74,6 +77,15 @@ public final class ExpressionInterpreter {
         return new Add(
           interpret(scanner),
           interpret(scanner));
+      case "Sum": 
+    	  String text = scanner.nextLine();
+    	  int indexOfColon = text.indexOf(':');
+    	  Position pos1 = PositionInterpreter.interpret(
+    			  					text.substring(1, indexOfColon));
+    	  Position pos2 = PositionInterpreter.interpret(
+    			  					text.substring(indexOfColon+1));
+    	  return new Sum(new Reference(Application.instance.getWorksheet(),
+    			  		 new Range(pos1, pos2)));
       case "True":
         return new True();
       case "False":
@@ -107,8 +119,6 @@ public final class ExpressionInterpreter {
     	  interpret(ifTE),
     	  interpret(thenExp),
     	  interpret(elseExp));
-    	
-    	
       case "Text":
         return new Text(scanner.next());
       case "Concat":
@@ -125,17 +135,28 @@ public final class ExpressionInterpreter {
         NoSuchSpreadsheet,
         InvalidPosition {
 
-    Spreadsheet spreadsheet = null;
-    final int indexOfBang = text.indexOf('!');
-    if (indexOfBang != -1) {
-      final String name = text.substring(0, indexOfBang);
-      spreadsheet = Application.instance.getSpreadsheet(name);
-      text = text.substring(indexOfBang + 1, text.length());
-    } else {
-      spreadsheet = Application.instance.getWorksheet();
-    }
+	  Spreadsheet spreadsheet = null;
+      final int indexOfBang = text.indexOf('!');
+      final int indexOfColon = text.indexOf(':');
+      final String text2;
+      final String name;
+      if (indexOfBang != -1) {
+    	  name = text.substring(0, indexOfBang);
+      	  spreadsheet = Application.instance.getSpreadsheet(name);
+      	  text = text.substring(indexOfBang + 1, text.length());
+      }
+      else 
+    	  spreadsheet = Application.instance.getWorksheet();
+      if (indexOfColon != -1) {
+              text2 = text.substring(0, indexOfColon);
+              text = text.substring(indexOfColon + 1);
+              return new Reference(spreadsheet,
+                      new Range(PositionInterpreter.interpret(text),
+                                            PositionInterpreter.interpret(text2)));
+          }
+          else {
+              return new Reference(spreadsheet, PositionInterpreter.interpret(text));
+          }
 
-    return new Reference(spreadsheet, PositionInterpreter.interpret(text));
+      }
   }
-
-}

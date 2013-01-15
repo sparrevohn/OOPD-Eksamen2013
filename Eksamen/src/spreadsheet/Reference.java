@@ -10,8 +10,8 @@ public final class Reference
     extends Expression implements Iterable<Expression> {
 
   private final Spreadsheet spreadsheet;
-  private Position position;
-  private Range range;
+  private final Position position;
+  private final Range range;
   private ArrayList<Expression> expressions;
 
   public Reference(final Spreadsheet spreadsheet, final Position position) {
@@ -20,6 +20,7 @@ public final class Reference
 	  this.position = position;
 	  this.range = new Range(position, position);
 	  expressions = new ArrayList<Expression>();
+	  makeArray();
   }
   
   public Reference(final Spreadsheet spreadsheet, final Range range) {
@@ -28,6 +29,7 @@ public final class Reference
     this.position = Range.posArray.get(0);
     this.range = range;
 	expressions = new ArrayList<Expression>();
+	makeArray();
   }
 
   private Expression getExpression() {
@@ -38,6 +40,14 @@ public final class Reference
 	    return expression;
   }
 
+  private void makeArray() {
+	  int i = 0;
+	  while (i < range.getArray().size()-1) {
+		  
+	  }
+		  
+  }
+  
   public boolean toBoolean() {
     return this.getExpression().toBoolean();
   }
@@ -93,14 +103,7 @@ public final class Reference
 
 @Override
 public Iterator<Expression> iterator() {
-	int i = 0;
-	while (i < range.getArray().size()-1) {
-		this.position = range.getArray().get(i);
-		Expression expression = getExpression();
-		expressions.add(expression);
-		i++;
-	}
-	return expressions.iterator();
+	return null;
 }
 
 

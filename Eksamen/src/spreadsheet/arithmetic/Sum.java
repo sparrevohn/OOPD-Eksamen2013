@@ -18,7 +18,6 @@ public final class Sum extends NullaryExpression {
 		int sum = 0;
 		for (Expression exp : reference) {
 				sum = sum + exp.toInt();
-				reference.iterator().next();
 		}
 		return sum;
 	}
