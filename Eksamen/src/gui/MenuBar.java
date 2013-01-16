@@ -67,6 +67,8 @@ public final class MenuBar
   private JMenu newEditMenu() {
 	final JMenu menu = new JMenu("Edit");
 	menu.add(this.newUndoMenuItem());
+	menu.add(this.newCopyMenuItem());
+	menu.add(this.newPasteMenuItem());
 	return menu;
   }
   
@@ -79,4 +81,16 @@ public final class MenuBar
 	menuItem.addActionListener(UndoListener.instance);
 	return menuItem;
   }
+  
+  //Add ActionListener
+  private JMenuItem newCopyMenuItem() {
+		final JMenuItem menuItem = new JMenuItem("Copy");
+		return menuItem;
+  }
+  
+  //Add ActionListener
+  private JMenuItem newPasteMenuItem() {
+		final JMenuItem menuItem = new JMenuItem("Paste");
+		return menuItem;
+}
 }

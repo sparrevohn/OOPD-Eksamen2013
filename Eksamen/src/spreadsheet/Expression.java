@@ -1,6 +1,7 @@
 package spreadsheet;
 
 import spreadsheet.exception.CycleException;
+import spreadsheet.exception.InvalidReference;
 
 public abstract class Expression {
 
@@ -35,4 +36,10 @@ public abstract class Expression {
   public boolean refersTo(final Spreadsheet spreadsheet) {
     return false;
   }
+  
+  public Expression copy(final int columnOffset, final int rowOffset)
+  						throws InvalidReference {
+	  return null;
+  }
+ 
 }

@@ -12,11 +12,12 @@ class Test {
   public static void main(String[] _) {
 	 Position pos = new Position(0,0);
 	 Expression exp = new Int(1);
-	 new NewSpreadsheet();
-	 new NewSpreadsheet();
-	 new NewSpreadsheet();
-	 new NewSpreadsheet();
-	 new NewSpreadsheet();
+	 Expression exp2 = new Int(2);
+//	 new Set(pos, exp).execute();
+//	 new Set(pos, exp2).execute();
+	 new NewSpreadsheet().execute();
+	 System.out.println(Application.instance.getSpreadsheets());
 	 History.instance.pop().undo();
+	 System.out.println(Application.instance.getSpreadsheets());
   }
 }

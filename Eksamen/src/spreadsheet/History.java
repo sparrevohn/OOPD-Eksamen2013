@@ -24,8 +24,10 @@ public class History {
 	public Change pop() {
 		if (!changeStack.isEmpty())
 			return changeStack.pop();
-		else
+		else {
+			System.out.println("NPE");
 			return null;
+		}
 	}
 }
 	

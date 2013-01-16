@@ -18,8 +18,8 @@ public final class NewSpreadsheet
     History.instance.push(this);
   }
 
-@Override
-public void undo() {
+  @Override
+  public void undo() {
 	if (sheet != null) {
 		try {
 			Application.instance.changeWorksheet(sheet);

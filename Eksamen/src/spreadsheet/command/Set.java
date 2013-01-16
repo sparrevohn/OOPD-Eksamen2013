@@ -27,7 +27,7 @@ public final class Set
 
   @Override
   public void undo() {
-	  if (position != null || oldExpression != null)
+	  if (position != null && oldExpression != null)
 	  Application.instance.set(position, oldExpression);
   }
   
