@@ -1,7 +1,7 @@
 package spreadsheet;
 
 public interface Change {
-	
-	void undo();
+ 	
+	abstract void undo();
 
 }

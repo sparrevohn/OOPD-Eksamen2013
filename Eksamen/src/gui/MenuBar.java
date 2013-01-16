@@ -9,6 +9,7 @@ import gui.language.Language;
 import gui.control.ExitListener;
 import gui.control.NewSpreadsheetListener;
 import gui.control.RemoveSpreadsheetListener;
+import gui.control.UndoListener;
 
 /** The main frame menu bar.
  * <p>
@@ -25,6 +26,7 @@ public final class MenuBar
     super();
     this.add(this.newFileMenu());
     this.add(this.newSpreadsheetMenu());
+    this.add(this.newEditMenu());
   }
 
   private JMenu newFileMenu() {
@@ -58,4 +60,23 @@ public final class MenuBar
     return menuItem;
   }
 
+  /**
+   * Creates the Edit menu
+   * @return JMenu used for Undo, Copy and Paste menu items
+   */
+  private JMenu newEditMenu() {
+	final JMenu menu = new JMenu("Edit");
+	menu.add(this.newUndoMenuItem());
+	return menu;
+  }
+  
+  /**
+   * Creates the undo menu item
+   * @return JMenuItem used to undo actions in the spreadsheet
+   */
+  private JMenuItem newUndoMenuItem() {
+	final JMenuItem menuItem = new JMenuItem("Undo");
+	menuItem.addActionListener(UndoListener.instance);
+	return menuItem;
+  }
 }
