@@ -4,6 +4,10 @@ import spreadsheet.Expression;
 import spreadsheet.Reference;
 import spreadsheet.expression.NullaryExpression;
 
+/**
+ * @author Kenneth S. Mørck
+ *  
+ */
 public final class Sum extends NullaryExpression {
 	
 	private final Reference reference; 
