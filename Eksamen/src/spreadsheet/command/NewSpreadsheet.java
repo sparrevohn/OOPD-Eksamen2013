@@ -1,5 +1,6 @@
 package spreadsheet.command;
 
+import gui.StatusView;
 import spreadsheet.Application;
 import spreadsheet.Change;
 import spreadsheet.History;

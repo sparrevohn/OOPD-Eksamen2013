@@ -25,14 +25,9 @@ class Test {
 	 i = 0;
 	 while (i <= 20) {
 		 History.instance.pop().undo();
+		 System.out.println(Application.instance.get(pos));
 		 i++;
 	 }
-//	 System.out.println(Application.instance.get(pos));
-//	 new NewSpreadsheet().execute();
-//	 new NewSpreadsheet().execute();
-//	 new NewSpreadsheet().execute();
-//	 System.out.println(Application.instance.getSpreadsheets());
-//	 History.instance.pop().undo();
-//	 System.out.println(Application.instance.getSpreadsheets());
+	 System.out.println(History.instance.pop() == null);
   }
 }

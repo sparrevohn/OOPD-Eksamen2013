@@ -1,5 +1,7 @@
 package gui.control;
 
+import gui.StatusView;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,7 +24,9 @@ public final class UndoListener
   public void actionPerformed(ActionEvent event) {
 	Change nullTest = History.instance.pop();
 	if (nullTest != null)
-    nullTest.undo();
+		nullTest.undo();
+	else
+		StatusView.instance.errorView.setText("Nothing to undo");
   }
 
 }
