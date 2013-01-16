@@ -7,6 +7,7 @@ import gui.ExpressionView;
 import gui.StatusView;
 
 import spreadsheet.Application;
+import spreadsheet.command.Set;
 import ui.ExpressionInterpreter;
 
 /** A listener for the Enter key in the {@link gui.ExpressionView}.
@@ -20,7 +21,7 @@ public class ExpressionKeyListener implements KeyListener {
     }
     StatusView.instance.errorView.clear();
     try {
-      Application.instance.set(ExpressionInterpreter.interpret(ExpressionView.instance.getText()));
+      new Set(Application.instance.getCurrentPosition(), ExpressionInterpreter.interpret(ExpressionView.instance.getText())).execute();
     } catch (Exception e) {
       Application.instance.reportError(e);
     }

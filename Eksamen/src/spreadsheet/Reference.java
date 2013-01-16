@@ -6,6 +6,10 @@ import java.util.Iterator;
 import spreadsheet.exception.CycleException;
 import spreadsheet.textual.Text;
 
+/**
+ * @author Kenneth S. Mørck
+ * Makes a reference to one or more cells in the spreadsheet
+ */
 public final class Reference
     extends Expression implements Iterable<Expression> {
 
@@ -14,6 +18,12 @@ public final class Reference
   private final Range range;
   private ArrayList<Expression> expressions;
 
+  /**
+   * Defines Reference as a GenericType and initializes the variables
+   * if given a position
+   * @param spreadsheet Assumed not null
+   * @param position Assumed not null
+   */
   public Reference(final Spreadsheet spreadsheet, final Position position) {
 	  super(GenericType.instance);
 	  this.spreadsheet = spreadsheet;
@@ -23,6 +33,12 @@ public final class Reference
 	  makeArray();
   }
   
+  /**
+   * Defines Reference as a GenericType and initializes the variables
+   * if given a range
+   * @param spreadsheet Assumed not null
+   * @param position Assumed not null
+   */
   public Reference(final Spreadsheet spreadsheet, final Range range) {
     super(GenericType.instance);
     this.spreadsheet = spreadsheet;
@@ -32,6 +48,11 @@ public final class Reference
 	makeArray();
   }
 
+  /**
+   * Returns the expression on the given position unless no expression
+   * is associated with the position the returns an empty Text 
+   * @return Guaranteed not null
+   */
   private Expression getExpression() {
 	    Expression expression = this.spreadsheet.get(this.position);
 	    if (expression == null) {
@@ -40,6 +61,9 @@ public final class Reference
 	    return expression;
   }
 
+  /**
+   * Fills the expressions ArrayList with all expression in the range
+   */
   private void makeArray() {
 	  int i = 0;
 	  while (i < range.getArray().size()) {
@@ -68,6 +92,10 @@ public final class Reference
     getExpression().checkAcyclic(new Path(this, path));
   }
 
+  /**
+   * Method for getting an easily understandable string of the reference
+   * @return
+   */
   public String getDescription() {
 	  int size = range.getArray().size();
 	  final String positionDescription;

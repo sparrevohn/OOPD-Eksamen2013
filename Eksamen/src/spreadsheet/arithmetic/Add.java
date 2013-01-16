@@ -16,7 +16,7 @@ public final class Add
       final Expression beta) {
     super(ArithmeticType.instance, alpha, beta);
   }
-
+  
   @Override
   public int toInt() {
     return this.alpha.toInt() + this.beta.toInt();

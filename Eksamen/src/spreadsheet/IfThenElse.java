@@ -16,7 +16,7 @@ public final class IfThenElse extends NullaryExpression {
 	private Expression ifFalse;
 	
 	/**
-	 * Defines IfThenElse as a GenericType and initiates the variables above  
+	 * Defines IfThenElse as a GenericType and initializes the variables above  
 	 * @param condition Assumed not null also determines whether
 	 * 					ifTrue or ifFalse will be returned when evaluated
 	 * @param ifTrue Assumed not null
@@ -67,7 +67,7 @@ public final class IfThenElse extends NullaryExpression {
 	}
 	
 	/**
-	 * A method for getting an easily understandable string 
+	 * Method for getting an easily understandable string 
 	 * of this expression type
 	 * @return Description of this expression type
 	 */
