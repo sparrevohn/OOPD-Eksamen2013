@@ -3,6 +3,7 @@ package gui.control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import spreadsheet.Change;
 import spreadsheet.History;
 
 /** A listener for the remove spreadsheet menu item.
@@ -19,7 +20,9 @@ public final class UndoListener
   }
 
   public void actionPerformed(ActionEvent event) {
-    History.instance.pop().undo();
+	Change nullTest = History.instance.pop();
+	if (nullTest != null)
+    nullTest.undo();
   }
 
 }

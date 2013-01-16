@@ -10,20 +10,28 @@ public final class NewSpreadsheet
     extends Command 
     implements Change{
 
-	private String sheet;
+	private String originalSheet;
+	private String newSheet;
 	
   public void execute() {
+	originalSheet = Application.instance.getWorksheet().getName();
     Application.instance.forceNewSpreadsheet();
-    sheet = Application.instance.getWorksheet().getName();
+    newSheet = Application.instance.getWorksheet().getName();
+    try {
+		Application.instance.changeWorksheet(originalSheet);
+	} catch (NoSuchSpreadsheet e) {
+		System.out.println("Fejl");
+	}
     History.instance.push(this);
   }
 
   @Override
   public void undo() {
-	if (sheet != null) {
+	Application shortcut = Application.instance;
+	if (newSheet != null && shortcut.getSpreadsheet(newSheet) != null) {
 		try {
-			Application.instance.changeWorksheet(sheet);
-			Application.instance.removeSpreadsheet();
+			shortcut.changeWorksheet(newSheet);
+			shortcut.removeSpreadsheet();
 		} catch (NoSuchSpreadsheet | OutcastReferenced e) {
 			e.printStackTrace();
 		}

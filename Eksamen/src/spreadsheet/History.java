@@ -13,7 +13,7 @@ public class History {
 	}
 	
 	public void push(Change change) {
-		if (changeStack.size() < 20)
+		if (changeStack.size() <= 20)
 			changeStack.push(change);
 		else {
 			changeStack.push(change);
@@ -25,7 +25,6 @@ public class History {
 		if (!changeStack.isEmpty())
 			return changeStack.pop();
 		else {
-			System.out.println("NPE");
 			return null;
 		}
 	}

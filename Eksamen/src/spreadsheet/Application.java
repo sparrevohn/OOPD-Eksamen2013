@@ -77,6 +77,7 @@ public final class Application {
       throw new SpreadsheetAlreadyExists(name);
     }
     this.spreadsheets.add(sheet);
+    this.worksheet = sheet;
     this.newSpreadsheetEvent.notifyObservers(sheet);
     return sheet;
   }
