@@ -55,6 +55,7 @@ public final class Set
 			  Application.instance.set(position, oldExpression);
 			  Application.instance.changeWorksheet(current);
 			} catch (NoSuchSpreadsheet e) {
+			  Application.instance.reportError(e);
 			}
 	  }
   }  

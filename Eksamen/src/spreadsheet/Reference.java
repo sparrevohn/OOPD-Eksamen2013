@@ -42,7 +42,7 @@ public final class Reference
   public Reference(final Spreadsheet spreadsheet, final Range range) {
     super(GenericType.instance);
     this.spreadsheet = spreadsheet;
-    this.position = Range.posArray.get(0);
+    this.position = range.getArray().get(0);
     this.range = range;
 	expressions = new ArrayList<Expression>();
 	makeArray();

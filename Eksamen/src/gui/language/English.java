@@ -27,5 +27,20 @@ final class English extends LanguageSpecification {
   public String removeSpreadsheet() {
     return "Remove spreadsheet";
   }
-
+  
+  public String edit() {
+	return "Edit";
+  }
+  
+  public String undo() {
+	return "Undo";
+  }
+  
+  public String copy() {
+	return "Copy";
+  }
+  
+  public String paste() {
+	return "Paste";
+  }
 }

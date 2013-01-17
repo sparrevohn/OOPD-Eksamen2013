@@ -21,7 +21,9 @@ public class ExpressionKeyListener implements KeyListener {
     }
     StatusView.instance.errorView.clear();
     try {
-      new Set(Application.instance.getCurrentPosition(), ExpressionInterpreter.interpret(ExpressionView.instance.getText())).execute();
+      new Set(Application.instance.getCurrentPosition(), 
+    		  ExpressionInterpreter.interpret(
+    				  ExpressionView.instance.getText())).execute();
     } catch (Exception e) {
       Application.instance.reportError(e);
     }

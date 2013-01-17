@@ -39,7 +39,10 @@ public abstract class Expression {
   
   public Expression copy(final int columnOffset, final int rowOffset)
   						throws InvalidReference {
-	  return null;
+	  if (columnOffset >= 0 && rowOffset >= 0)
+	  	return null;
+	  else
+		  throw new InvalidReference();
   }
  
 }

@@ -1,6 +1,5 @@
 package spreadsheet.command;
 
-import gui.StatusView;
 import spreadsheet.Application;
 import spreadsheet.Change;
 import spreadsheet.History;
@@ -21,7 +20,7 @@ public final class NewSpreadsheet
     try {
 		Application.instance.changeWorksheet(originalSheet);
 	} catch (NoSuchSpreadsheet e) {
-		System.out.println("Fejl");
+		Application.instance.reportError(e);
 	}
     History.instance.push(this);
   }

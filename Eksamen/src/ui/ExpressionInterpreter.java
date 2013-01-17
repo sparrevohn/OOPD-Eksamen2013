@@ -148,15 +148,15 @@ public final class ExpressionInterpreter {
       else 
     	  spreadsheet = Application.instance.getWorksheet();
       if (indexOfColon != -1) {
-              text2 = text.substring(0, indexOfColon);
-              text = text.substring(indexOfColon + 1);
-              return new Reference(spreadsheet,
-                      new Range(PositionInterpreter.interpret(text),
-                                            PositionInterpreter.interpret(text2)));
-          }
-          else {
-              return new Reference(spreadsheet, PositionInterpreter.interpret(text));
-          }
+          text2 = text.substring(0, indexOfColon);
+          text = text.substring(indexOfColon + 1);
+          return new Reference(spreadsheet,
+                  new Range(PositionInterpreter.interpret(text),
+                            PositionInterpreter.interpret(text2)));
+      }
+      else {
+          return new Reference(spreadsheet, PositionInterpreter.interpret(text));
+      }
 
       }
   }

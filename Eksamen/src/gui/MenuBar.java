@@ -6,8 +6,10 @@ import javax.swing.JMenuItem;
 
 import gui.language.Language;
 
+import gui.control.CopyListener;
 import gui.control.ExitListener;
 import gui.control.NewSpreadsheetListener;
+import gui.control.PasteListener;
 import gui.control.RemoveSpreadsheetListener;
 import gui.control.UndoListener;
 
@@ -65,7 +67,7 @@ public final class MenuBar
    * @return JMenu used for Undo, Copy and Paste menu items
    */
   private JMenu newEditMenu() {
-	final JMenu menu = new JMenu("Edit");
+	final JMenu menu = new JMenu(Language.instance.edit());
 	menu.add(this.newUndoMenuItem());
 	menu.add(this.newCopyMenuItem());
 	menu.add(this.newPasteMenuItem());
@@ -77,20 +79,22 @@ public final class MenuBar
    * @return JMenuItem used to undo actions in the spreadsheet
    */
   private JMenuItem newUndoMenuItem() {
-	final JMenuItem menuItem = new JMenuItem("Undo");
+	final JMenuItem menuItem = new JMenuItem(Language.instance.undo());
 	menuItem.addActionListener(UndoListener.instance);
 	return menuItem;
   }
   
   //Add ActionListener
   private JMenuItem newCopyMenuItem() {
-		final JMenuItem menuItem = new JMenuItem("Copy");
+		final JMenuItem menuItem = new JMenuItem(Language.instance.copy());
+		menuItem.addActionListener(CopyListener.instance);
 		return menuItem;
   }
   
   //Add ActionListener
   private JMenuItem newPasteMenuItem() {
-		final JMenuItem menuItem = new JMenuItem("Paste");
+		final JMenuItem menuItem = new JMenuItem(Language.instance.paste());
+		menuItem.addActionListener(PasteListener.instance);
 		return menuItem;
 }
 }
