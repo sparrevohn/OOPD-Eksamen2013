@@ -13,6 +13,7 @@ public abstract class LanguageSpecification {
   public abstract String newSpreadsheet();
   public abstract String removeSpreadsheet();
   
+  //Names for my edit menu
   public abstract String edit();
   public abstract String undo();
   public abstract String copy();

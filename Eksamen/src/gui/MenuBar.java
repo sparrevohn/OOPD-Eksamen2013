@@ -84,14 +84,20 @@ public final class MenuBar
 	return menuItem;
   }
   
-  //Add ActionListener
+  /**
+   * Creates the copy menu item
+   * @return JMenuItem used to copy expressions in the spreadsheet
+   */
   private JMenuItem newCopyMenuItem() {
 		final JMenuItem menuItem = new JMenuItem(Language.instance.copy());
 		menuItem.addActionListener(CopyListener.instance);
 		return menuItem;
   }
   
-  //Add ActionListener
+  /**
+   * Creates the paste menu item
+   * @return JMenuItem used to paste expressions in the spreadsheet
+   */
   private JMenuItem newPasteMenuItem() {
 		final JMenuItem menuItem = new JMenuItem(Language.instance.paste());
 		menuItem.addActionListener(PasteListener.instance);

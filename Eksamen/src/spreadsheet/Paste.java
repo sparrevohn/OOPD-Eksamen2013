@@ -1,5 +1,6 @@
 package spreadsheet;
 
+import gui.StatusView;
 import spreadsheet.command.Set;
 import spreadsheet.exception.InvalidReference;
 
@@ -12,12 +13,15 @@ public final class Paste {
 	
 	/**
 	 * Starts a paste loop if no expressions will go out of bounds
-	 * and a reference is not pasted in a different spreadsheet 
+	 * and a reference is not pasted in a different spreadsheet
+	 * If nothing is copied, catches NullPointerException and 
+	 * sets statusview to "Nothing copied" 
 	 * @throws InvalidReference If some expressions go out of bounds
 	 * 							or a reference is pasted in a different
 	 * 							spreadsheet;
 	 */
 	public Paste() throws InvalidReference {
+		try {
 		Application app = Application.instance; 
 		if (app.getCurrentPosition().getColumn() 
 				+ Copy.getMinColOffset() >= 0 
@@ -32,6 +36,9 @@ public final class Paste {
 		}
 		else
 			throw new InvalidReference();
+		} catch (NullPointerException e) {
+			StatusView.instance.errorView.setText("Nothing copied");
+		}
 	}
 	
 	/**

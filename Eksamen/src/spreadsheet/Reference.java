@@ -73,16 +73,37 @@ public final class Reference
 	  }  
   }
   
-  public boolean toBoolean() {
-    return this.getExpression().toBoolean();
+  /**
+   * Evaluates the expression to a boolean value
+   * @throws UnsupportedOperationException If the expression holds 
+   * 									   a reference to multiple cells
+   */
+  public boolean toBoolean() throws UnsupportedOperationException {
+	  if (range.getUpperLeft().isEqualTo(range.getLowerRight()))
+		  return this.getExpression().toBoolean();
+	  else throw new UnsupportedOperationException();
   }
 
-  public int toInt() {
-    return this.getExpression().toInt();
+  /**
+   * Evaluates the expression to a integer value
+   * @throws UnsupportedOperationException If the expression holds 
+   * 									   a reference to multiple cells
+   */
+  public int toInt() throws UnsupportedOperationException {
+	  if (range.getUpperLeft().isEqualTo(range.getLowerRight()))
+		  return this.getExpression().toInt();
+	  else throw new UnsupportedOperationException();
   }
 
-  public String toString() {
-    return this.getExpression().toString();
+  /**
+   * Evaluates the expression to a string value
+   * @throws UnsupportedOperationException If the expression holds 
+   * 									   a reference to multiple cells
+   */
+  public String toString() throws UnsupportedOperationException {
+	  if (range.getUpperLeft().isEqualTo(range.getLowerRight()))
+		  return this.getExpression().toString();
+	  else throw new UnsupportedOperationException();
   }
 
   public void checkAcyclic(final Path path)
@@ -95,7 +116,7 @@ public final class Reference
   
   /**
    * Method for getting an easily understandable string of the reference
-   * @return
+   * @return String
    */
   public String getDescription() {
 	  int size = range.getArray().size();
@@ -114,6 +135,10 @@ public final class Reference
     }
   }
   
+  /**
+   * Checks to see if two references are the same
+   * @return boolean representation of two references being equal
+   */
   @Override
   public boolean equals(Object other) {
     if (other == null || !(other instanceof Reference)) {
@@ -130,11 +155,18 @@ public final class Reference
     return this.spreadsheet.equals(spreadsheet);
   }
 
+  /**
+   * Iterator used by Sum to go through the expressions with at 'for-each' loop
+   */
   @Override
   public Iterator<Expression> iterator() {
 	return expressions.iterator();
   }
 
+  /**
+   * Used by sum to get the right description
+   * @return 
+   */
   public String getRangeDescription() {
 	  return range.getUpperLeft().getDescription() + ":" 
 		   + range.getLowerRight().getDescription(); 

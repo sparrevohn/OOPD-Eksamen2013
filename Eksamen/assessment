@@ -1,0 +1,204 @@
+				//** OPGAVE 1 **\\
+My Lt and Eq expressions work as a gem.
+I have mainly tested them in the GUI since they are simpler methods.
+Both functions work as long as the given expression is not null.
+Therefore they work with user inputs, but the can throw null pointers in tests.
+I have tested both trying to get false and true and all possible combinations of
+toString/Int/Bool.
+My IfThenElse works as it should and the keyword.toLowercase() I have 
+implemented also works on then and else, so user errors will be at a minimum.
+
+				//** OPGAVE 2 **\\
+I assignment 2 I have made a arguably good result.
+My references for multiple cells at this point do not show the last, 
+only the first cell. It should throw the UnsupportedOperationException but
+do to my posArray constantly changing size it seems to never evaluate more references.
+My plan was to make a setposArray method the could potentially make the posArray
+contain the positions referenced and possibly solving these problems but i ran 
+out of time. My sum works very well (In my opinion) only problem is, if you
+have a reference to multiple cells it will take the upper left expression as its
+input and evaluate it. This should throw an error. Sum.getDescription() sets the
+positions in the right place (aka Sum F5:A0 will become Sum A0:F5). 
+
+These are some System.out.println tests i have made, the rest was tested in GUI.
+
+Opgave 2.1
+  	  test = new Range(new Position(0,0), new Position(5,5));
+	  test.makeArray();
+	  int i = 0;
+	  System.out.println(test.posArray.size());
+	  while (i < test.posArray.size()) {
+		  System.out.println(test.posArray.get(i).getDescription());
+		  i++;
+	  }
+  
+Opgave 2.3
+	  System.out.println("Hej");
+	  Position pos = new Position(0,0);
+	  Application.instance.set(pos, new Text("Hej"));
+	  Reference ref = new Reference(new Spreadsheet(), new Range(pos, new Position(5,5)));
+	  System.out.println(ref.getDescription());
+	  System.out.println(new Sum(ref).getDescription());
+	  System.out.println(Application.instance.get(pos).toInt());
+	  System.out.println(ref == null);
+	  System.out.println(new Sum(ref));
+	  String text = " A0:A5";
+	  int indexOfColon = text.indexOf(':');
+	  Position pos1 = null;
+	  try {
+		  pos1 = PositionInterpreter.interpret(
+				  					text.substring(1, indexOfColon));
+	  } catch (InvalidPosition e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	  }
+	    Position pos2 = null;
+	  try {
+		  pos2 = PositionInterpreter.interpret(
+				  					text.substring(indexOfColon+1));
+	  } catch (InvalidPosition e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	  }
+	  System.out.println(pos1.getDescription());
+	  System.out.println(pos2.getDescription());
+	  System.out.println((new Reference(Application.instance.getWorksheet(),
+		  	  		 new Range(pos1, pos2))).getDescription());
+	  System.out.println(new Sum((new Reference(Application.instance.getWorksheet(),
+			  		 new Range(pos1, pos2)))).getDescription());
+  } 
+  
+				//** OPGAVE 3 **\\
+My undo function works "perfectly".
+I had 3 different ideas for the solution in this.
+
+1) Make it as it is now, where if some of the undo's are done manually (this is
+only if you create a spreadsheet, remove it, and try to undo creating) it will
+perform an undo but do nothing.
+
+2) My second idea was to do as above but keep the undo's in an list of some sort
+that whenever a spreadsheet was removed it would check if an undo function that
+would remove the spreadsheet existed and then remove the undo. This seemed like
+a more "correct" idea because doing an undo that does nothing seemed wrong, but
+i figured it would be weird to do this instead of number 3.
+
+3) My "best" idea was to implement undo in the RemoveSpreadsheet command do to
+it seemingly being the most logical way to have undo work. Only problem was
+the sheet rename method throws an exception if the sheet already exists, but in
+the GUI you can't rename spreadsheets so it should never do this. For me this
+seemed like just moving the problem. Then i would have the name already exists
+problem outside of the GUI, so I thought if I go with this method, I should
+implement spreadsheet name change in the GUI and make renaming another undo type
+but this would take more time than i ended up having, and worst case scenario
+would be undo not working at the end of the exam.
+
+I have made some tests of this in the System.out.println way but once undo 
+worked most of my tests where made in the GUI to be able to see how it reacted.
+
+Opgave 3
+			TEST 1
+
+import spreadsheet.Application;
+import spreadsheet.Expression;
+import spreadsheet.History;
+import spreadsheet.Position;
+import spreadsheet.arithmetic.Int;
+import spreadsheet.command.NewSpreadsheet;
+import spreadsheet.command.Set;
+
+class Test {
+
+	
+  public static void main(String[] _) {
+	 Position pos = new Position(0,0);
+	 Expression exp = new Int(1);
+	 Expression exp2 = new Int(2);
+	 new Set(pos, exp).execute();
+	 new Set(pos, exp2).execute();
+	 System.out.println(Application.instance.get(pos));
+	 History.instance.pop().undo();
+	 System.out.println(Application.instance.get(pos));
+	 
+	 
+	 
+	 		TEST 2
+	 		
+import spreadsheet.Application;
+import spreadsheet.Expression;
+import spreadsheet.History;
+import spreadsheet.Position;
+import spreadsheet.arithmetic.Int;
+import spreadsheet.command.NewSpreadsheet;
+import spreadsheet.command.Set;
+
+class Test {
+
+	
+  public static void main(String[] _) {
+	 new NewSpreadsheet().execute();
+	 System.out.println(Application.instance.getSpreadsheets());
+	 History.instance.pop().undo();
+	 System.out.println(Application.instance.getSpreadsheets());
+  }
+}
+	 		 		
+	 	   TEST 3
+	
+import spreadsheet.Application;
+import spreadsheet.Expression;
+import spreadsheet.History;
+import spreadsheet.Position;
+import spreadsheet.arithmetic.Int;
+import spreadsheet.command.NewSpreadsheet;
+import spreadsheet.command.Set;
+
+class Test {
+
+	
+  public static void main(String[] _) {
+	 int i = 0;
+	 Position pos = new Position(0,0);
+	 Expression exp = new Int(i);
+	 new Set(pos, exp).execute();
+	 i++;
+	 System.out.println(Application.instance.get(pos));
+	 while (i <= 20) {	
+	 	exp = new Int(i);
+	 	new Set(pos, exp).execute();
+	 	i++;
+	 	System.out.println(Application.instance.get(pos));
+	 }
+	 i = 0;
+	 while (i <= 20) {
+		 History.instance.pop().undo();
+		 System.out.println(Application.instance.get(pos));
+		 i++;
+	 }
+	 System.out.println(History.instance.pop() == null);
+  }
+}
+
+				//** OPGAVE 4 **\\
+The Copy/Paste is the one i think is implemented the best.
+I read on the "discussionforum" that many people thought it was weird that if
+you refer to a cell and paste it else where the reference should change.
+I agreed on this but as Simon Shine said "The assignment says you should do it,
+so do it". I figured moving a reference, making it refer to something else 
+would be missing the point. So i thought "if this implementation type is going
+to make sense, it should move the whole 'reference-tree'". It thought that the
+most logical thing would be to move the tree to a different position. This gave
+some frustrations, but ended up working. I had the problem, making this a loop
+will make it try to paste, and not actually know if it can finish the loop.
+The problem with this was it pasted all references, until it ended out of the 
+spreadsheet. I made copy, figure out how far from the "bounds" it should be
+in order to actually be pasted, and made it not begin the loop if the loop could
+not finish. Happy with the result i tried pasting in a different sheet and got
+a problem with it making a reference to the original sheet. I thought it would
+be to extensive to make it possible to move a 'tree' to a different sheet so I 
+ended up making this an error. Last thing was me getting a null pointer if I
+tried pasting without copying. I took what I think is the easy way out and
+caught this making the error text say "Nothing copied".
+
+All of this was tested in the GUI. 
+
+I have not made number 5 do to lack of time.

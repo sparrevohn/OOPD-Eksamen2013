@@ -32,7 +32,7 @@ public class History {
 	
 	/**
 	 * Gets last change made
-	 * @return Last change if any else null
+	 * @return Last change, if any, else null
 	 */
 	public Change pop() {
 		if (!changeStack.isEmpty())

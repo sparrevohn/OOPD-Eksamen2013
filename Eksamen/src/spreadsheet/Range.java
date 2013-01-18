@@ -14,7 +14,7 @@ public final class Range {
 		private int maxColumn;
 		private int minRow;
 		private int maxRow;
-		public static ArrayList<Position> posArray; 
+		private static ArrayList<Position> posArray; 
 		
 		/**
 		 * Gets the minimum and maximum column and row values of two position
@@ -48,18 +48,26 @@ public final class Range {
 	  }	
 	
 	/**
-	 * Used to get posArray the right way
+	 * Used to get posArray
 	 * @return posArray
 	 */
 	public ArrayList<Position> getArray() {
 		return posArray;
 	}
 	
+	
+	/**
+	 * Getter for the upper left position in the range
+	 * @return Assumes the range had a position which is not null
+	 */
 	public Position getUpperLeft() {
 		return posArray.get(0);
 	}
 	
-	
+	/**
+	 * Getter for the lower right position in the range
+	 * @return Assumes the range had a position which is not null
+	 */
 	public Position getLowerRight() {
 		return posArray.get(posArray.size()-1);
 	}

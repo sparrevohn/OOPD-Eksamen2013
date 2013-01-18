@@ -66,18 +66,19 @@ public final class ExpressionInterpreter {
       throw new IllegalStartOfExpression();
     }
 
-    switch(keyword) {
-      case "Int":
+    //keyword made to lowercase to avoid some user errors
+    switch(keyword.toLowerCase()) {
+      case "int":
         return new Int(
           scanner.nextInt());
-      case "Neg":
+      case "neg":
         return new Neg(
           interpret(scanner));
-      case "Add":
+      case "add":
         return new Add(
           interpret(scanner),
           interpret(scanner));
-      case "Sum": 
+      case "sum": 
     	  String text = scanner.nextLine();
     	  int indexOfColon = text.indexOf(':');
     	  Position pos1 = PositionInterpreter.interpret(
@@ -86,42 +87,43 @@ public final class ExpressionInterpreter {
     			  					text.substring(indexOfColon+1));
     	  return new Sum(new Reference(Application.instance.getWorksheet(),
     			  		 new Range(pos1, pos2)));
-      case "True":
+      case "true":
         return new True();
-      case "False":
+      case "false":
         return new False();
-      case "Not":
+      case "not":
         return new Not(
           interpret(scanner));
-      case "And":
+      case "and":
         return new And(
           interpret(scanner),
           interpret(scanner));
-      case "Or":
+      case "or":
         return new Or(
           interpret(scanner),
           interpret(scanner));
-      case "Lt": 
+      case "lt": 
     	return new Lt(
     	  interpret(scanner), 
     	  interpret(scanner));
-      case "Eq": 
+      case "eq": 
     	return new Eq(
     	  interpret(scanner),
     	  interpret(scanner));
-      case "If":
+      case "if":
     	  String ifTE = scanner.nextLine();
-    	  int indexThen = ifTE.indexOf("Then");
-    	  int indexElse = ifTE.indexOf("Else");
+    	  ifTE.toLowerCase();
+    	  int indexThen = ifTE.indexOf("then");
+    	  int indexElse = ifTE.indexOf("else");
     	  String thenExp = ifTE.substring(indexThen+5, indexElse);
     	  String elseExp = ifTE.substring(indexElse+5);
     	return new IfThenElse(
     	  interpret(ifTE),
     	  interpret(thenExp),
     	  interpret(elseExp));
-      case "Text":
+      case "text":
         return new Text(scanner.next());
-      case "Concat":
+      case "concat":
         return new Concat(
           interpret(scanner),
           interpret(scanner));
@@ -130,6 +132,13 @@ public final class ExpressionInterpreter {
     }
   }
 
+  /**
+   * Interprets the given string as a reference
+   * @param text Not fitting any cases of ExpressionInterpreter
+   * @return new Reference at the position
+   * @throws NoSuchSpreadsheet
+   * @throws InvalidPosition
+   */
   private static Reference interpretReference(String text)
       throws
         NoSuchSpreadsheet,
