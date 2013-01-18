@@ -92,7 +92,7 @@ public final class Reference
     }
     getExpression().checkAcyclic(new Path(this, path));
   }
-
+  
   /**
    * Method for getting an easily understandable string of the reference
    * @return

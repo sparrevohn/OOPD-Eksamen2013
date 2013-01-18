@@ -11,14 +11,17 @@ public class Copy {
 	private static Position startPos;
 	private static int minColOffset;
 	private static int minRowOffset;
+	private static String sheet;
 	
 	public Copy() {
-		setTempCurrentExp(Application.instance.get());
-		setTempCurrentPos(Application.instance.getCurrentPosition());
-		setStartExp(Application.instance.get());
-		setStartPos(Application.instance.getCurrentPosition());
+		Application app = Application.instance;
+		setTempCurrentExp(app.get());
+		setTempCurrentPos(app.getCurrentPosition());
+		setStartExp(app.get());
+		setStartPos(app.getCurrentPosition());
 		setMinColOffset(0);
 		setMinRowOffset(0);
+		setSheet(app.getWorksheet().getName());
 		offsetCheck();
 		
 	}
@@ -94,5 +97,13 @@ public class Copy {
 		else
 			Copy.setTempCurrentPos(getStartPos());
 			Copy.setTempCurrentExp(getStartExp());
+	}
+
+	public static String getSheet() {
+		return sheet;
+	}
+
+	public static void setSheet(String sheet) {
+		Copy.sheet = sheet;
 	}
 }

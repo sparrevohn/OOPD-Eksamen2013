@@ -1,41 +1,53 @@
 package spreadsheet.command;
 
+import gui.TabbedView;
 import spreadsheet.Application;
 import spreadsheet.Change;
 import spreadsheet.History;
 import spreadsheet.exception.NoSuchSpreadsheet;
 import spreadsheet.exception.OutcastReferenced;
 
+/**
+ * @author Kenneth S. Mørck
+ * Class for creating a new spreadsheet
+ */
 public final class NewSpreadsheet
     extends Command 
     implements Change{
 
-	private String originalSheet;
+	//Sheet name used by the undo function
 	private String newSheet;
 	
+  /**
+   * Forces a new spreadsheet, initializes the variable and adds
+   * a change to the top of the history stack
+   */
   public void execute() {
-	originalSheet = Application.instance.getWorksheet().getName();
-    Application.instance.forceNewSpreadsheet();
-    newSheet = Application.instance.getWorksheet().getName();
-    try {
-		Application.instance.changeWorksheet(originalSheet);
-	} catch (NoSuchSpreadsheet e) {
-		Application.instance.reportError(e);
-	}
-    History.instance.push(this);
+	newSheet = Application.instance.forceNewSpreadsheet().getName();
+	History.instance.push(this);
   }
 
+  /**
+   * Undoes the lastly made spreadsheet
+   * Will perform an undo but do nothing 
+   * if the spreadsheet has already been removed
+   */
   @Override
   public void undo() {
-	Application shortcut = Application.instance;
-	if (newSheet != null && shortcut.getSpreadsheet(newSheet) != null) {
+	  Application app = Application.instance;
+	  if (newSheet != null && app.getSpreadsheet(newSheet) != null) {
 		try {
-			shortcut.changeWorksheet(newSheet);
-			shortcut.removeSpreadsheet();
+			app.changeWorksheet(newSheet);
+			app.removeSpreadsheet();
+			app.changeWorksheet(
+					TabbedView.instance.getTitleAt(
+							TabbedView.instance.getSelectedIndex()));
 		} catch (NoSuchSpreadsheet | OutcastReferenced e) {
-			e.printStackTrace();
+			app.reportError(e);
 		}
-	}
+	  }
+	  
+	  
 	}
 	
 

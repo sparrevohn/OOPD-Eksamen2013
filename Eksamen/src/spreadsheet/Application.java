@@ -65,8 +65,6 @@ public final class Application {
   }
 
   /** Creates a new spreadsheet in the application.
-   * Changes the worksheet to the new spreadsheet in order
-   * to make the undo function work.
    * @return The created spreadsheet; guaranteed not null.
    * @throws SpreadsheetAlreadyExists if user renamed spreadsheet
    * in a way that prohibits the automatic name generator.
@@ -79,7 +77,6 @@ public final class Application {
       throw new SpreadsheetAlreadyExists(name);
     }
     this.spreadsheets.add(sheet);
-    this.worksheet = sheet;
     this.newSpreadsheetEvent.notifyObservers(sheet);
     return sheet;
   }
