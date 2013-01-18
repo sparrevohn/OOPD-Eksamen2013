@@ -39,8 +39,12 @@ public abstract class Expression {
   
   public Expression copy(final int columnOffset, final int rowOffset)
   						throws InvalidReference {
-	  if (columnOffset >= 0 && rowOffset >= 0)
-	  	return null;
+	  Position current = Application.instance.getCurrentPosition();
+	  int column = current.getColumn();
+	  int row = current.getRow();
+	  Position returnedRef = new Position(column + columnOffset, row + rowOffset);
+	  if (returnedRef.getColumn() >= 0 && returnedRef.getRow() >= 0)
+		  return new Reference(Application.instance.getWorksheet(), returnedRef);
 	  else
 		  throw new InvalidReference();
   }

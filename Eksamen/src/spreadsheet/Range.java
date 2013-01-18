@@ -55,24 +55,13 @@ public final class Range {
 		return posArray;
 	}
 	
-//	public void setArray(Position pos) {
-//		int index = containedIndex(pos); 
-//		if (index == -1) {
-//			new Range(pos, posArray.get(posArray.size()-1));
-//		}
-//		else posArray.set(index, pos);
-//	}
-//	
-//	public int containedIndex(Position pos) {
-//		int i = 0;
-//		while (i < Range.posArray.size()-1) {
-//			if (pos.getColumn() == posArray.get(i).getColumn()
-//				&& pos.getRow() == posArray.get(i).getRow()) {
-//				return i;
-//			}
-//			else i++;
-//		}
-//		return -1;
-//	}
+	public Position getUpperLeft() {
+		return posArray.get(0);
+	}
+	
+	
+	public Position getLowerRight() {
+		return posArray.get(posArray.size()-1);
+	}
 }
 

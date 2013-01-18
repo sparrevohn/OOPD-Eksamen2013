@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 
 import gui.ExpressionView;
 import gui.StatusView;
+import gui.TabbedView;
 
 import spreadsheet.Application;
 import spreadsheet.command.Set;
@@ -27,6 +28,7 @@ public class ExpressionKeyListener implements KeyListener {
     } catch (Exception e) {
       Application.instance.reportError(e);
     }
+    TabbedView.instance.repaint();
   }
 
   @Override

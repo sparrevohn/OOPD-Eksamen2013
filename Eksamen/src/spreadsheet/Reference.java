@@ -65,9 +65,10 @@ public final class Reference
    * Fills the expressions ArrayList with all expression in the range
    */
   private void makeArray() {
+	  ArrayList<Position> array = range.getArray();
 	  int i = 0;
-	  while (i < range.getArray().size()) {
-		  expressions.add(Application.instance.get(range.getArray().get(i)));
+	  while (i < array.size()) {
+		  expressions.add(Application.instance.get(array.get(i)));
 		  i++;
 	  }  
   }
@@ -99,8 +100,11 @@ public final class Reference
   public String getDescription() {
 	  int size = range.getArray().size();
 	  final String positionDescription;
+	  if (size > 1) {
 		  positionDescription = this.position.getDescription() + ":"
-				  				+ range.getArray().get(size-1).getDescription();
+				  				+ range.getLowerRight().getDescription();
+	  }
+	  else positionDescription = this.position.getDescription();
     if (Application.instance.getWorksheet().equals(this.spreadsheet)) {
       return positionDescription;
     } else {
@@ -118,7 +122,7 @@ public final class Reference
     final Reference otherReference = (Reference)other;
     return
         otherReference.spreadsheet.equals(this.spreadsheet) &&
-        otherReference.range.getArray().equals(this.range.getArray());
+        otherReference.position.equals(this.position);
   }
   
   @Override
@@ -126,11 +130,14 @@ public final class Reference
     return this.spreadsheet.equals(spreadsheet);
   }
 
-@Override
-public Iterator<Expression> iterator() {
+  @Override
+  public Iterator<Expression> iterator() {
 	return expressions.iterator();
-}
+  }
 
-
+  public String getRangeDescription() {
+	  return range.getUpperLeft().getDescription() + ":" 
+		   + range.getLowerRight().getDescription(); 
+  }
 
 }

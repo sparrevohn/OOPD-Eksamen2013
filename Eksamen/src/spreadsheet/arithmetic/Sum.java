@@ -20,7 +20,7 @@ public final class Sum extends NullaryExpression {
 	public Sum(final Reference reference) {
 		super(ArithmeticType.instance);
 		this.reference = reference;
-		description = reference.getDescription();
+		description = reference.getRangeDescription();
 	}
 
 	/**
@@ -44,6 +44,6 @@ public final class Sum extends NullaryExpression {
 	@Override
 	public String getDescription() {
 		return this.getClass().getSimpleName() + " " 
-			   + description.substring(description.indexOf('!')+1);
+			   + description;
 	}
 }

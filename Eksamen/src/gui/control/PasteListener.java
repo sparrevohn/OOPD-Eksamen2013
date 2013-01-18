@@ -1,9 +1,12 @@
 package gui.control;
 
+import gui.StatusView;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import spreadsheet.Paste;
+import spreadsheet.exception.InvalidReference;
 
 /**
  * @author Kenneth S. Mørck
@@ -20,7 +23,12 @@ public final class PasteListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		new Paste().execute();
+		try {
+			new Paste();
+		} catch (InvalidReference e) {
+			StatusView.instance.errorView.setText(
+											"Paste reference out of bounds");
+		}
 	}
 
 }
